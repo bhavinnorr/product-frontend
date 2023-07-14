@@ -1,0 +1,12 @@
+*{
+    font-family: 'Noto Sans','';
+}
+.fade .modal-backdrop .show{
+    z-index:971!important;
+}
+.modal{
+    z-index: 972!important;
+}
+.modal-backdrop {
+    z-index: 1!important;
+}

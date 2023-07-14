@@ -1,0 +1,138 @@
+.button-submit {
+  margin-top: 20px;
+  width: 100%;
+  background: #900c3f;
+  border-radius: 7px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 2px 0 2px 0;
+}
+.button-submit-disabled {
+  margin-top: 20px;
+  width: 100%;
+  background: #817d7e;
+  border-radius: 7px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 2px 0 2px 0;
+}
+/* marginTop:20px;
+width: 100%;
+background: #900C3F;
+borderRadius: 7px;
+color: white;
+fontWeight: bold;
+cursor: pointer;
+padding:2px 0 2px 0; */
+/* :root {
+  font-family: Inter; system-ui; Avenir; Helvetica; Arial; sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255; 255; 255; 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus;
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+} */
+
+/* .btn-outline-danger svg path {
+  fill: red;
+}
+
+.btn-outline-danger:hover svg path {
+  fill: currentColor;
+} */
+rect {
+  fill: currentColor;
+}
+svg {
+  margin-right: "10px";
+}
+svg path {
+  fill: currentColor;
+}
+#basic_in_stock[value="1"] .btn-outline-success {
+  background-color: green !important;
+  color: aliceblue;
+}
+#basic_in_stock[value="0"] .btn-outline-danger {
+  background-color: #eb0f63 !important;
+  color: aliceblue;
+}
+#no:checked .btn-outline-danger {
+  background-color: #900c3f !important;
+}
+#yes:checked .btn-outline-success {
+  background-color: green !important;
+}
+input[type="radio"]#yes:checked + label {
+  font-weight: bold;
+  background-color: #28a745;
+  color: aliceblue;
+}
+input[type="radio"]#no:checked + label {
+  font-weight: bold;
+  background-color: #dc3545;
+  color: aliceblue;
+}

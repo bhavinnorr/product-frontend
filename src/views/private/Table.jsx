@@ -35,7 +35,7 @@ const getBase64 = (file) =>
   });
 
 function Table() {
-  const [fileListValidate, setfileListValidate]=useState();
+  const [fileListValidate, setfileListValidate] = useState();
   const navigate = useNavigate();
   axios.interceptors.request.use((request) => requestInterceptor(request));
   axios.interceptors.response.use(
@@ -75,9 +75,9 @@ function Table() {
     console.log(id);
     let a = await axios.get("http://localhost:8000/api/products/" + id);
     let res = await a.data;
-    console.log(res.data.fileList);
-    setFileList(res.data.fileList);
-    normFile(res.data.fileList);
+    console.log(res.data.file_name);
+    setFileList(res.data.file_name);
+    normFile(res.data.file_name);
     // let img = [];
     // for (let i = 0; i < res.data.image.length; i++) {
     //   img.push(res.data.image[i]);
@@ -88,7 +88,7 @@ function Table() {
       in_stock: res.data.in_stock,
       category: res.data.category,
       price: res.data.price,
-      fileList: res.data.fileList
+      fileList: res.data.file_name,
     });
     setShow(true);
   };
@@ -155,7 +155,6 @@ function Table() {
     );
   };
   const handleChange = ({ fileList: newFileList }) => {
-    
     setFileList(newFileList);
     console.log(newFileList);
   };
@@ -172,19 +171,18 @@ function Table() {
     </div>
   );
   const handleDelete = (e) => {
-    console.log("handleDelete:- ",e);
+    console.log("handleDelete:- ", e);
     let a = JSON.parse(JSON.stringify(fileList));
-    let b=[];
+    let b = [];
     for (let i = 0; i < fileList.length; i++) {
-      console.log(i)
+      console.log(i);
       if (fileList[i].name == e.name) {
         // a.splice(i, 1);
         b.push(a[i]);
         // console.log("B:- ",b);
-        b[b.length-1].removed = true;
-      }
-      else{
-        b.push(a[i])
+        b[b.length - 1].removed = true;
+      } else {
+        b.push(a[i]);
       }
     }
     setFileList(b);
@@ -200,18 +198,20 @@ function Table() {
     console.log("filelist:- ");
     let a = [...fileList];
 
-    return e?.fileList.filter((file)=>{return !('removed' in file)});
+    return e?.fileList.filter((file) => {
+      return !("removed" in file);
+    });
   };
   const props = {
     name: "file",
     onChange(info) {
       if (info.file.status === "done") {
         // let a = {};
-        console.log(info)
+        console.log(info);
         info.file.name = info.file.response.data.name;
         info.file.url = info.file.response.data.url;
         // info.fileList[fileList.length]
-        setFileList(info.fileList)
+        setFileList(info.fileList);
 
         // console.log(
         //   "Filelist structuredclone:- ",
@@ -237,9 +237,9 @@ function Table() {
   //     },
   //   });
 
-    // const json = await response.json();
-    // console.log(json)
-    // Do something with the response JSON.
+  // const json = await response.json();
+  // console.log(json)
+  // Do something with the response JSON.
   // };
   return (
     <>
@@ -270,12 +270,11 @@ function Table() {
             onFinish={async (values) => {
               if (edit) {
                 console.log(values);
-                let a =[];
-                for (let i=0;i<fileList.length;i++){
-                  if ('removed' in fileList[i]){
+                let a = [];
+                for (let i = 0; i < fileList.length; i++) {
+                  if ("removed" in fileList[i]) {
                     continue;
-                  }
-                  else{
+                  } else {
                     a.push(fileList[i]);
                   }
                 }
@@ -293,7 +292,7 @@ function Table() {
                 values.fileList = fileList;
                 const res = await axios.post(
                   "http://127.0.0.1:8000/api/products",
-                    values,
+                  values
                 );
                 const data2 = await res.data;
                 alert(data2.message);
@@ -428,7 +427,12 @@ function Table() {
               getValueFromEvent={normFile}
               rules={[
                 {
-                  required: fileList.filter((file)=>{return !('removed' in file)})?.length === 0 ? true : false,
+                  required:
+                    fileList.filter((file) => {
+                      return !("removed" in file);
+                    })?.length === 0
+                      ? true
+                      : false,
                   message: "Please select at least one image",
                 },
               ]}
@@ -445,11 +449,15 @@ function Table() {
                   handleDelete(e);
                 }}
                 headers={{
-                  "Authorization":"Bearer "+localStorage.getItem("token")
+                  Authorization: "Bearer " + localStorage.getItem("token"),
                 }}
                 fileList={{ ...image }}
               >
-                {fileList.filter((file)=>{return !('removed' in file);}).length >= 4 ? null : uploadButton}
+                {fileList.filter((file) => {
+                  return !("removed" in file);
+                }).length >= 4
+                  ? null
+                  : uploadButton}
               </Upload>
             </Form.Item>
             <Modalantd
@@ -589,19 +597,45 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            
             {products?.map((product, i) => {
               return (
                 <tr key={i}>
                   {Object.values(product).map((key, i) => {
-                      return (
-                        <td scope="col" key={i}>
-                          {JSON.stringify(key).length > 40 ?
-                            <img src={key[0].thumbUrl} alt="" width="80px"/>
-                            : key==null? <span className="rounded-pill bg-danger text-light px-2" style={{fontWeight:"bold"}}>null</span>:key=="1"?<span className="rounded-pill bg-success text-light px-2" style={{fontWeight:"bold"}}>yes</span>:key=="0"?<span className="rounded-pill bg-danger text-light px-2" style={{fontWeight:"bold"}}>no</span>:key}
-                        </td>
-                      );
-                    })} 
+                    return (
+                      <td scope="col" key={i}>
+                        {JSON.stringify(key).length > 40 ? (
+                          <img
+                            src={JSON.parse(key)[0].url}
+                            alt=""
+                            width="80px"
+                          />
+                        ) : key == null ? (
+                          <span
+                            className="rounded-pill bg-danger text-light px-2"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            null
+                          </span>
+                        ) : key == "1" ? (
+                          <span
+                            className="rounded-pill bg-success text-light px-2"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            yes
+                          </span>
+                        ) : key == "0" ? (
+                          <span
+                            className="rounded-pill bg-danger text-light px-2"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            no
+                          </span>
+                        ) : (
+                          key
+                        )}
+                      </td>
+                    );
+                  })}
                   <td>
                     <button
                       className="btn btn-success py-0 px-2 fw-bold"

@@ -87,7 +87,7 @@ export default function ProductList() {
     const table = async () => {
       let a = await axios.get("http://127.0.0.1:8000/api/products");
       let b = await a.data;
-      console.log("useeffect b:-", b);
+      // console.log("useeffect b:-", b);
       setData(b);
       setApi(true);
       return b;
@@ -106,7 +106,6 @@ export default function ProductList() {
           <div className="row">
             {api
               ? data.data.map((element, i) => {
-                  console.log("Data image:-", data.image);
                   return <Product key={i} data={element} />;
                 })
               : "Loading..."}

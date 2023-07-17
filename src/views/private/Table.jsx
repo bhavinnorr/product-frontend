@@ -75,9 +75,9 @@ function Table() {
     console.log(id);
     let a = await axios.get("http://localhost:8000/api/products/" + id);
     let res = await a.data;
-    console.log(res.data.file_name);
-    setFileList(res.data.file_name);
-    normFile(res.data.file_name);
+    console.log("file_name:- ",res.data);
+    setFileList(JSON.parse(res.data.file_name));
+    normFile(JSON.parse(res.data.file_name));
     // let img = [];
     // for (let i = 0; i < res.data.image.length; i++) {
     //   img.push(res.data.image[i]);
@@ -88,7 +88,7 @@ function Table() {
       in_stock: res.data.in_stock,
       category: res.data.category,
       price: res.data.price,
-      fileList: res.data.file_name,
+      fileList: JSON.parse(res.data.file_name),
     });
     setShow(true);
   };

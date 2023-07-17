@@ -136,3 +136,8 @@ input[type="radio"]#no:checked + label {
   background-color: #dc3545;
   color: aliceblue;
 }
+
+.img {
+  height: 45px;
+  width: 35px;
+}

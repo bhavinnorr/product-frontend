@@ -75,9 +75,9 @@ function Table() {
     console.log(id);
     let a = await axios.get("http://localhost:8000/api/products/" + id);
     let res = await a.data;
-    console.log("file_name:- ",res.data);
-    setFileList(JSON.parse(res.data.file_name));
-    normFile(JSON.parse(res.data.file_name));
+    console.log("images:- ", res.data);
+    setFileList(res.data.images[0].file_name);
+    normFile(res.data.images[0].file_name);
     // let img = [];
     // for (let i = 0; i < res.data.image.length; i++) {
     //   img.push(res.data.image[i]);
@@ -88,7 +88,7 @@ function Table() {
       in_stock: res.data.in_stock,
       category: res.data.category,
       price: res.data.price,
-      fileList: JSON.parse(res.data.file_name),
+      fileList: res.data.images[0].file_name,
     });
     setShow(true);
   };
@@ -172,6 +172,7 @@ function Table() {
   );
   const handleDelete = (e) => {
     console.log("handleDelete:- ", e);
+    console.log("fileList:-(onDelete) ", fileList);
     let a = JSON.parse(JSON.stringify(fileList));
     let b = [];
     for (let i = 0; i < fileList.length; i++) {
@@ -179,8 +180,9 @@ function Table() {
       if (fileList[i].name == e.name) {
         // a.splice(i, 1);
         b.push(a[i]);
+        console.log("b[b.length - 1]:- ", b, ", a:- ", a);
         // console.log("B:- ",b);
-        b[b.length - 1].removed = true;
+        b[b.length - 1]["removed"] = true;
       } else {
         b.push(a[i]);
       }
@@ -215,11 +217,11 @@ function Table() {
 
         // console.log(
         //   "Filelist structuredclone:- ",
-        //   JSON.parse(JSON.stringify(fileList)),
+        //   JSON.stringify(fileList)),
         //   "\nfileList:- ",
         //   fileList
         // );
-        // const list = JSON.parse(JSON.stringify(fileList));
+        // const list = JSON.stringify(fileList));
         // list.push(a);
         // console.log(a);
         // setFileList(list);
@@ -605,7 +607,7 @@ function Table() {
                       <td scope="col" key={i}>
                         {JSON.stringify(key).length > 40 ? (
                           <img
-                            src={JSON.parse(key)[0].url}
+                            src={key[0].file_name[0].url}
                             alt=""
                             width="80px"
                           />

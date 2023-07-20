@@ -65,7 +65,7 @@ export default function Product(props) {
           </span>
         </div>
         <Carousel autoplay dots={false}>
-          {JSON.parse(data.file_name).map((img,i)=>{
+          {data.images[0].file_name.map((img,i)=>{
              return <div key={i}>
             <h3 style={contentStyle}>
               <img src={img.url} alt="" width={"100%"} height={"200px"}/>

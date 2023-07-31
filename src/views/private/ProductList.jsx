@@ -58,8 +58,8 @@ export default function ProductList() {
     },
     function (error) {
       console.log("response error:-", error);
-
-      if (error.response.data.message == "Unauthenticated.") {
+      if (error.response.data.message == "Unauthenticated." || error.response.data == "Unauthorized") {
+        localStorage.removeItem("token")
         navigate("/user/login");
       }
       // Any status codes that falls outside the range of 2xx cause this function to trigger

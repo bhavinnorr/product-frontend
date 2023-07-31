@@ -29,7 +29,8 @@ axios.interceptors.response.use(
   },
   function (error) {
     console.log("response", error);
-    if (error.response.data.message == "Unauthenticated.") {
+    if (error.response.data.message == "Unauthenticated." || error.response.data == "Unauthorized") {
+      localStorage.removeItem("token")
       navigate("/user/login");
     }
     // Any status codes that falls outside the range of 2xx cause this function to trigger

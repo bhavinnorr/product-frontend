@@ -47,7 +47,11 @@ function Table() {
     },
     function (error) {
       console.log("response", error);
-      if (error.response.data.message == "Unauthenticated.") {
+      if (
+        error.response.data.message == "Unauthenticated." ||
+        error.response.data == "Unauthorized"
+      ) {
+        localStorage.removeItem("token");
         navigate("/user/login");
       }
       // Any status codes that falls outside the range of 2xx cause this function to trigger
@@ -242,6 +246,9 @@ function Table() {
   // const json = await response.json();
   // console.log(json)
   // Do something with the response JSON.
+  // };
+  // const getKeyByValue = (object, value) => {
+  //   return Object.keys(object).find((key) => object[key] === value);
   // };
   return (
     <>
@@ -591,7 +598,7 @@ function Table() {
                 Object.keys(products[0]).map((key, i) => {
                   return (
                     <th scope="col" key={i}>
-                      {key[0].toUpperCase() + key.slice(1).replace("_", "")}
+                      {key[0].toUpperCase() + key.slice(1).replace("_", " ")}
                     </th>
                   );
                 })}
@@ -602,30 +609,32 @@ function Table() {
             {products?.map((product, i) => {
               return (
                 <tr key={i}>
-                  {Object.values(product).map((key, i) => {
+                  {console.log(i)}
+                  {Object.entries(product).map(([key, value], i) => {
                     return (
                       <td scope="col" key={i}>
-                        {JSON.stringify(key).length > 40 ? (
+                        {key=="images" ? (
                           <img
-                            src={key[0].file_name[0].url}
+                            src={value[0]?.file_name[0]?.url}
                             alt=""
                             width="80px"
                           />
-                        ) : key == null ? (
+                        ) : // JSON.stringify(value)
+                        value == null ? (
                           <span
                             className="rounded-pill bg-danger text-light px-2"
                             style={{ fontWeight: "bold" }}
                           >
                             null
                           </span>
-                        ) : key == "1" ? (
+                        ) : value == "1" && key == "in_stock" ? (
                           <span
                             className="rounded-pill bg-success text-light px-2"
                             style={{ fontWeight: "bold" }}
                           >
                             yes
                           </span>
-                        ) : key == "0" ? (
+                        ) : value == "0" && key == "in_stock" ? (
                           <span
                             className="rounded-pill bg-danger text-light px-2"
                             style={{ fontWeight: "bold" }}
@@ -633,7 +642,7 @@ function Table() {
                             no
                           </span>
                         ) : (
-                          key
+                          value
                         )}
                       </td>
                     );
